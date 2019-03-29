@@ -7,6 +7,9 @@ use App\Category;
 
 use Illuminate\Http\Request;
 
+// バリデーション用のCreateCategoryRequestを使用するため
+use App\Http\Requests\CreateCategoryRequest;
+
 class CategoriesController extends Controller
 {
     /**
@@ -35,11 +38,8 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:categories'
-        ]);
         // 静的メソッドcreateを使用するとインスタンス化の手間が省ける
         // $category = new Category();
         // $category->name = $request->name;
