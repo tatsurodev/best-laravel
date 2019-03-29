@@ -8,7 +8,8 @@ use App\Category;
 use Illuminate\Http\Request;
 
 // バリデーション用のCreateCategoryRequestを使用するため
-use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\Categories\CreateCategoryRequest;
+use App\Http\Requests\Categories\UpdateCategoriesRequest;
 
 class CategoriesController extends Controller
 {
