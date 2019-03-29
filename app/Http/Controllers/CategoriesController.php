@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+// Categoryモデルをパスなしで使用するため
+use App\Category;
+
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -34,7 +37,17 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|unique:categories'
+        ]);
+        // 静的メソッドcreateを使用するとインスタンス化の手間が省ける
+        // $category = new Category();
+        // $category->name = $request->name;
+        Category::create([
+            'name' => $request->name,
+        ]);
+        session()->flash('success', 'Category created successfully.');
+        return redirect(route('categories.index'));
     }
 
     /**
