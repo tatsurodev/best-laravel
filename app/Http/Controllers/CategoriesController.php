@@ -80,9 +80,14 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoriesRequest $request, Category $category)
     {
-        //
+        $category->update([
+            'name' => $request->name,
+        ]);
+        $category->save();
+        session()->flash('success', 'Category updated successfully.');
+        return redirect(route('categories.index'));
     }
 
     /**
