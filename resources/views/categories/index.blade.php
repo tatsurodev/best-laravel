@@ -43,11 +43,11 @@
                         </div>
                         <div class="modal-body">
                             <p class="text-center text-bold">Are you sure you want to delete this category?</p>
-    </div>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">No, Go back</button>
                             <button type="submit" class="btn btn-danger">Yes, Delete</button>
-</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,4 +55,15 @@
     </div>
 </div>
 @endsection
+
+@section('script')
+<script>
+    function handleDelete(id) {
+        var form = document.getElementById('deleteCategoryForm');
+        form.action = `/categories/${id}`;
+        console.log('deleting', form);
+        $('#deleteModal').modal('show');
+    }
+
+</script>
 @endsection

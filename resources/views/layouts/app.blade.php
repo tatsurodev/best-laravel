@@ -102,6 +102,7 @@
             @endauth
         </main>
     </div>
+    @yield('script')
 </body>
 
 </html>
