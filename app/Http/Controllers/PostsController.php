@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
@@ -91,7 +90,7 @@ class PostsController extends Controller
             // 新しい画像のアップロード
             $image = $request->image->store('posts');
             // 古い画像の削除
-            Storage::delete($post->image);
+            $post->deleteImage();
             // 新しい画像のパスを更新用配列に追加
             $date['image'] = $image;
         }
@@ -113,9 +112,11 @@ class PostsController extends Controller
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
         if ($post->trashed()) {
             // 画像ファイルの削除
-            Storage::delete($post->image);
+            $post->deleteImage();
+            // 該当レコードの完全削除
             $post->forceDelete();
         } else {
+            // 該当レコードのソフトデリート
             $post->delete();
         }
         session()->flash('success', 'Post deleted  successfully.');
