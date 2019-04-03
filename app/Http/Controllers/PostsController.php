@@ -134,4 +134,13 @@ class PostsController extends Controller
         return view('posts.index')->with('posts', $trashed);
         //return view('posts.index')->withPosts($trashed);
     }
+
+    // restoreするデータはtrashedされて削除されていることになっているのでroute mode bindingでは取得できない。よって該当レコードを必須パラメーターから抽出する
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
+        $post->restore();
+        session()->flash('success', 'Post restored  successfully.');
+        return redirect()->back();
+    }
 }
