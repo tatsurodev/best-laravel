@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\Posts\CreatePostsRequest;
 
@@ -39,7 +40,7 @@ class PostsController extends Controller
     public function store(CreatePostsRequest $request)
     {
         // 画像アップロード
-        $image = $request->image->store('public/posts');
+        $image = $request->image->store('posts');
         Post::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -95,6 +96,8 @@ class PostsController extends Controller
     {
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
         if ($post->trashed()) {
+            // 画像ファイルの削除
+            Storage::delete($post->image);
             $post->forceDelete();
         } else {
             $post->delete();
