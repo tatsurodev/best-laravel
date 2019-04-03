@@ -90,10 +90,16 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    // route model bindingは、soft deletingではデーターベース上にないことになっているので該当レコードを取得できない。よっｔ必須パラメーターから抽出する
+    public function destroy($id)
     {
-        $post->delete();
-        session()->flash('success', 'Post trashed successfully.');
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
+        if ($post->trashed()) {
+            $post->forceDelete();
+        } else {
+            $post->delete();
+        }
+        session()->flash('success', 'Post deleted  successfully.');
         return redirect(route('posts.index'));
     }
 
