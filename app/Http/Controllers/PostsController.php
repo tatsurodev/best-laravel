@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\Posts\CreatePostsRequest;
+use App\Http\Requests\Posts\UpdatePostRequest;
 
 use App\Post;
 
@@ -81,9 +82,23 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        // 受け取るnameを限定
+        $date = $request->only(['title', 'description', 'content', 'published_at']);
+        // 画像のアップデート
+        if ($request->hasFile('image')) {
+            // 新しい画像のアップロード
+            $image = $request->image->store('posts');
+            // 古い画像の削除
+            Storage::delete($post->image);
+            // 新しい画像のパスを更新用配列に追加
+            $date['image'] = $image;
+        }
+        // ポストを更新
+        $post->update($date);
+        session()->flash('success', 'Post updated successfully.');
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -92,7 +107,7 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // route model bindingは、soft deletingではデーターベース上にないことになっているので該当レコードを取得できない。よっｔ必須パラメーターから抽出する
+    // route model bindingは、soft deletingではデーターベース上にないことになっているので該当レコードを取得できない。よって必須パラメーターから抽出する
     public function destroy($id)
     {
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
