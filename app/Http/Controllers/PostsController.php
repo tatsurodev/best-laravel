@@ -96,4 +96,16 @@ class PostsController extends Controller
         session()->flash('success', 'Post trashed successfully.');
         return redirect(route('posts.index'));
     }
+
+    /**
+     * Display a list of all trashed posts.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function trashed()
+    {
+        $trashed = Post::onlyTrashed()->get();
+        return view('posts.index')->with('posts', $trashed);
+        //return view('posts.index')->withPosts($trashed);
+    }
 }
