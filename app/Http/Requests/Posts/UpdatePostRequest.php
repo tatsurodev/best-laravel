@@ -27,7 +27,8 @@ class UpdatePostRequest extends FormRequest
             // 更新の為に、titleの重複不可を外す
             'title' => 'required',
             'description' => 'required',
-            'content'=> 'required'
+            'content'=> 'required',
+            'category'=> 'required'
         ];
     }
 }
