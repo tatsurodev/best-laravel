@@ -40,6 +40,18 @@
                 <input type="file" class="form-control" id="image" name="image">
             </div>
             <div class="form-group">
+                <label for="category">Category</label>
+                <select name="category" id="category" class="form-control">
+                    @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{-- カテゴリーオプションでselectedが必要なのはedit時だけ、create時は不要 --}}
+                        {{-- @if(isset($post)) {{($category->id === $post->category_id) ? 'selected' : ''}} @endif> --}}
+                        {{(isset($post) && $category->id === $post->category_id) ? 'selected' : ''}}
+                        >
+                        {{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <button type="submit" class="btn btn-success">
                     {{ isset($post) ? 'Update Post' : 'Create Post' }}
                 </button>
