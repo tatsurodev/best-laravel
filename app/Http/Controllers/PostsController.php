@@ -9,6 +9,7 @@ use App\Http\Requests\Posts\UpdatePostRequest;
 
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostsController extends Controller
 {
@@ -36,7 +37,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create')->with('categories', Category::all());
+        return view('posts.create')->with('categories', Category::all())->with('tags', Tag::all());
     }
 
     /**
@@ -49,7 +50,8 @@ class PostsController extends Controller
     {
         // 画像アップロード
         $image = $request->image->store('posts');
-        Post::create([
+        // 新たに作られたレコードを変数に格納
+        $post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
             'content' => $request->content,
@@ -57,6 +59,11 @@ class PostsController extends Controller
             'published_at' => $request->published_at,
             'category_id' => $request->category,
         ]);
+        //　タグが選ばれていたら
+        if ($request->tags) {
+            // 新しい投稿の、tagsリレーションに、選択したタグを、アタッチする
+            $post->tags()->attach($request->tags);
+        }
         session()->flash('success', 'Post created successfully.');
         return redirect(route('posts.index'));
     }
@@ -80,7 +87,7 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.create')->with('post', $post)->with('categories', Category::all());
+        return view('posts.create')->with('post', $post)->with('categories', Category::all())->with('tags', Tag::all());
     }
 
     /**
@@ -103,6 +110,8 @@ class PostsController extends Controller
             // 新しい画像のパスを更新用配列に追加
             $date['image'] = $image;
         }
+        // attachだと新たにリレーションが追加、detachだと該当リレーションが削除されてしまうため、syncを使ってpostとtagのリレーションを同期
+        $post->tags()->sync($request->tags);
         // ポストを更新
         $post->update($date);
         session()->flash('success', 'Post updated successfully.');
