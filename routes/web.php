@@ -34,5 +34,6 @@ Route::middleware(['auth'])->group(function () {
 // Route::middleware(['admin', 'auth'])は動作しない
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('users', 'UsersController@index')->name('users.index');
+    Route::get('users/profile', 'UsersController@edit')->name('users.edit-profile');
     Route::post('users/{user}/make-admin', 'UsersController@makeAdmin')->name('users.make-admin');
 });

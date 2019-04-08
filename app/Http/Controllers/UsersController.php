@@ -13,6 +13,12 @@ class UsersController extends Controller
         return view('users.index')->with('users', User::all());
     }
 
+    public function edit()
+    {
+        // routeから必須パラメーターを貰ってユーザーを取得するとgetで他のユーザープロフィールも編集できることになり、ユーザーが自分のプロフィールのみ編集可にするミドルウェアが必要になり手間がかかるので直接現在のユーザーインスタンスを渡す
+        return view('users.edit')->with('user', auth()->user());
+    }
+
     public function makeAdmin(User $user)
     {
         $user->role = 'admin';
