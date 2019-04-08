@@ -15,7 +15,8 @@
                 @foreach ($users as $user)
                 <tr>
                     <td>
-                        <img alt="" width="120px" height="60px">
+                        <img class="rounded-circle" src="{{ Gravatar::src($user->email) }}" alt="" width="40px"
+                            height="40px">
                     </td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
