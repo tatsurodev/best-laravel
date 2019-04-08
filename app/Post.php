@@ -32,4 +32,21 @@ class Post extends Model
         // 1:!の関係(Categoryが主、Postが従)、自動的にPostモデルのcategory_idフィールドとcategoryモデルのidフィールドが関連付けられる
         return $this->belongsTo(Category::class);
     }
+
+    public function tags()
+    {
+        // 多対多の関係を定義
+        return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Check if post has tag
+     *
+     * @return bool
+     */
+
+    public function hasTag($tagID)
+    {
+        return in_array($tagID, $this->tags->pluck('id')->toArray());
+    }
 }
