@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Storage;
 class Post extends Model
 {
     use SoftDeletes;
+    // date型フィールドを登録して比較可能に
+    protected $dates = [
+        'published_at'
+    ];
 
     protected $fillable = [
         'title', 'description' , 'content', 'image', 'published_at', 'category_id', 'user_id'
@@ -62,10 +66,17 @@ class Post extends Model
         $search = request()->query('search');
         if (!$search) {
             // 検索ワードがなければそのまま
-            return $query;
+            return $query->published();
         } else {
             // タイトルを検索ワードで絞り込み
-            return $query->where('title', 'LIKE', "%{$search}%");
+            return $query->published()->where('title', 'LIKE', "%{$search}%");
         }
+    }
+
+    // 公開済みスコープ
+    public function scopePublished($query)
+    {
+        // nullでも公開扱い
+        return $query->where('published_at', '<=', now())->orWhereNUll('published_at');
     }
 }
