@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', 'WelcomController@index');
+Route::get('/', 'WelcomController@index')->name('welcome');
+
+Route::get('/blog/posts/{post}', 'Blog\PostsController@show')->name('blog.show');
 
 Auth::routes();
 
