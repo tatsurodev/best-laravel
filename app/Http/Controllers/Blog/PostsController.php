@@ -18,21 +18,12 @@ class PostsController extends Controller
 
     public function category(Category $category)
     {
-        // getから検索ワードゲット
-        $search = request()->query('search');
-        if ($search) {
-            // カテゴリーから関連ポストを取得、更にタイトルを検索ワードで絞り込み
-            $posts = $category->posts()->where('title', 'LIKE', "%{$search}%")->simplePaginate(2);
-        } else {
-            // カテゴリーの関連ポスト一覧
-            $posts = $category->posts()->simplePaginate(2);
-        }
         return
             view('blog.category')
             ->with('category', $category)
             ->with('categories', Category::all())
             ->with('tags', Tag::all())
-            ->with('posts', $posts)
+            ->with('posts', $category->posts()->searched()->simplePaginate(2))
         ;
     }
 
@@ -43,7 +34,7 @@ class PostsController extends Controller
             ->with('tag', $tag)
             ->with('categories', Category::all())
             ->with('tags', Tag::all())
-            ->with('posts', $tag->posts()->simplePaginate(2))
+            ->with('posts', $tag->posts()->searched()->simplePaginate(2))
         ;
     }
 }

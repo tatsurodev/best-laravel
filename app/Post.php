@@ -54,4 +54,18 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // 検索用スコープ
+    public function scopeSearched($query)
+    {
+        // getから検索ワードゲット
+        $search = request()->query('search');
+        if (!$search) {
+            // 検索ワードがなければそのまま
+            return $query;
+        } else {
+            // タイトルを検索ワードで絞り込み
+            return $query->where('title', 'LIKE', "%{$search}%");
+        }
+    }
 }
