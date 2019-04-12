@@ -6,13 +6,15 @@
 
     <div class="card-body">
         <form action="{{ route('discussion.store') }}" method="post">
+            @csrf
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" class="form-control" id="title" name="title" value="">
             </div>
             <div class="form-group">
                 <label for="content">Content</label>
-                <textarea name="content" class="form-control" id="content" cols="5" rows="5"></textarea>
+                <input id="content" type="hidden" name="content">
+                <trix-editor input="content"></trix-editor>
             </div>
             <div class="form-group">
                 <label for="chennel">Channel</label>
@@ -26,4 +28,12 @@
         </form>
     </div>
 </div>
+@endsection
+
+@section('css')
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.1.0/trix.css">
+@endsection
+
+@section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.1.0/trix.js"></script>
 @endsection

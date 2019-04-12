@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // View::shreはサイト全体でグローバルに使う場合に便利、View::composerは使用するビューを指定できる
         View::share('channels', Channel::all());
     }
 }
