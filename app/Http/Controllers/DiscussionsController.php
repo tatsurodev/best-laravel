@@ -3,6 +3,7 @@
 namespace LaravelForum\Http\Controllers;
 
 use Illuminate\Http\Request;
+use LaravelForum\Http\Requests\CreateDiscussionRequest;
 
 class DiscussionsController extends Controller
 {
@@ -32,9 +33,17 @@ class DiscussionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateDiscussionRequest $request)
     {
-        //
+        // ユーザーとのリレーションからディスカッションのレコード作成
+        auth()->user()->discussions()->create([
+            'title' => $request->title,
+            'slug' => str_slug($request->title),
+            'content' => $request->content,
+            'channel_id' => $request->channel,
+        ]);
+        session()->flash('success', 'Discussion posted.');
+        return redirect()->route('discussion.index');
     }
 
     /**
