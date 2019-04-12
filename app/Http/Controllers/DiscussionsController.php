@@ -5,6 +5,8 @@ namespace LaravelForum\Http\Controllers;
 use Illuminate\Http\Request;
 use LaravelForum\Http\Requests\CreateDiscussionRequest;
 
+use LaravelForum\Discussion;
+
 class DiscussionsController extends Controller
 {
     /**
@@ -14,7 +16,9 @@ class DiscussionsController extends Controller
      */
     public function index()
     {
-        //
+        return view('discussions.index', [
+            'discussions' => Discussion::paginate(5),
+        ]);
     }
 
     /**
