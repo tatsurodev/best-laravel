@@ -52,7 +52,7 @@ class DiscussionsController extends Controller
             'channel_id' => $request->channel,
         ]);
         session()->flash('success', 'Discussion posted.');
-        return redirect()->route('discussion.index');
+        return redirect()->route('discussions.index');
     }
 
     /**
