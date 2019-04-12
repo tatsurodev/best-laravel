@@ -79,6 +79,8 @@
         <main class="container py-4">
             <div class="row">
                 <div class="col-md-4">
+                    <a href="{{ route('discussion.create') }}" class="btn btn-info btn-block text-white my-2">Add
+                        Discussion</a>
                     <ul class="list-group">
                         @foreach($channels as $channel)
                         <li class="list-group-item">
