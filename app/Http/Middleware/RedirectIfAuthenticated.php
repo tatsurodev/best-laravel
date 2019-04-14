@@ -17,8 +17,9 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // ログイン後にlogin, registerにアクセスがあるとここにリダイレクト
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            return redirect('/discussions');
         }
 
         return $next($request);
