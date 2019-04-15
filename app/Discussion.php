@@ -12,6 +12,11 @@ class Discussion extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function replies()
+    {
+        return $this->hasmany(Reply::class);
+    }
+
     // ルートモデルバインディング使用時のprimary keyをslugに変更
     public function getRouteKeyName()
     {
