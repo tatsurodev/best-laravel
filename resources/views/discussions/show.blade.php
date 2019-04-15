@@ -9,6 +9,24 @@
         </div>
         <hr>
         {!! $discussion->content !!}
+        @if($discussion->bestReply)
+        <div class="card bg-success text-white my-5">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="font-weight-bold">Best Reply</div>
+                    <div>
+                        <img class="rounded-circle mr-2" style="width:40px; height: 40px;"
+                            src="{{ Gravatar::src($discussion->bestReply->owner->email) }}" alt="">
+                        <strong>
+                            {{ $discussion->bestReply->owner->name }}
+                        </strong>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">{!!
+                $discussion->bestReply->content !!}</div>
+        </div>
+        @endif
     </div>
 </div>
 @foreach($discussion->replies()->paginate(3) as $reply)
@@ -17,9 +35,9 @@
         <div class="d-flex justify-contet-between align-items-center">
             <div>
                 <img class="rounded-cirecle" style="width: 40px; height: 40px;"
-                src="{{ Gravatar::src($reply->owner->email) }}" alt="">
-            <span>{{ $reply->owner->name }}</span>
-        </div>
+                    src="{{ Gravatar::src($reply->owner->email) }}" alt="">
+                <span>{{ $reply->owner->name }}</span>
+            </div>
             <div>
                 @if(auth()->user()->id === $discussion->user_id)
                 <form

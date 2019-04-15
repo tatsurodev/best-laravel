@@ -23,6 +23,19 @@ class Discussion extends Model
         return 'slug';
     }
 
+    // ベストリプライのインスタンスを取得
+    public function getBestReply()
+    {
+        return Reply::find($this->reply_id);
+    }
+
+    // DiscussionとReplyのリレーション
+    public function bestReply()
+    {
+        return $this->belongsTo(Reply::class, 'reply_id');
+        // return $this->hasOne(Reply::class, 'id', 'reply_id');
+    }
+
     public function markAsBestReply(Reply $reply)
     {
         $this->update([
