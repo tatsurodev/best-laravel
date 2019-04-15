@@ -7,6 +7,8 @@ use LaravelForum\Discussion;
 use Illuminate\Http\Request;
 use LaravelForum\Http\Requests\CreateReplyRequest;
 
+use LaravelForum\Notifications\NewReplyAdded;
+
 class RepliesController extends Controller
 {
     /**
@@ -41,6 +43,8 @@ class RepliesController extends Controller
             'discussion_id' => $discussion->id,
             'content' => $request->content,
         ]);
+        // notification dispatch
+        $discussion->author->notify(new NewReplyAdded($discussion));
         session()->flash('success', 'Reply added.');
         return redirect()->back();
     }
