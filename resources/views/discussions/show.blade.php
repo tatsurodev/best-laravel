@@ -39,6 +39,7 @@
                 <span>{{ $reply->owner->name }}</span>
             </div>
             <div>
+                @auth
                 @if(auth()->user()->id === $discussion->user_id)
                 <form
                     action="{{ route('discussions.best-reply', ['discussion' => $discussion->slug, 'reply' => $reply->id]) }}"
@@ -46,8 +47,8 @@
                     @csrf
                     <button class="btn btn-primary btn-sm" type="submit">Mark as best reply</button>
                 </form>
-
                 @endif
+                @endauth
             </div>
         </div>
     </div>
