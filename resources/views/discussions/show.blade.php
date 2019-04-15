@@ -14,10 +14,23 @@
 @foreach($discussion->replies()->paginate(3) as $reply)
 <div class="card my-5">
     <div class="card-header">
-        <div class="d-flex justify-contet-between">
-            <img class="image-rounded" style="width: 40px; height: 40px;"
+        <div class="d-flex justify-contet-between align-items-center">
+            <div>
+                <img class="rounded-cirecle" style="width: 40px; height: 40px;"
                 src="{{ Gravatar::src($reply->owner->email) }}" alt="">
             <span>{{ $reply->owner->name }}</span>
+        </div>
+            <div>
+                @if(auth()->user()->id === $discussion->user_id)
+                <form
+                    action="{{ route('discussions.best-reply', ['discussion' => $discussion->slug, 'reply' => $reply->id]) }}"
+                    method="post">
+                    @csrf
+                    <button class="btn btn-primary btn-sm" type="submit">Mark as best reply</button>
+                </form>
+
+                @endif
+            </div>
         </div>
     </div>
     <div class="card-body">
