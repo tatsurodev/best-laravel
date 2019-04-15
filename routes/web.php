@@ -22,3 +22,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('discussions', 'DiscussionsController');
 
 Route::resource('discussions/{discussion}/replies', 'RepliesController');
+
+// Best reply
+Route::post('discussions/{discussion}/replies/{reply}/mark-as-best-reply', 'DiscussionsController@reply')->name('discussions.best-reply');

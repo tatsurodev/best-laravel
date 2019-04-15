@@ -18,6 +18,8 @@ class CreateDiscussionsTable extends Migration
             $table->integer('user_id');
             $table->string('title');
             $table->text('content');
+            // ベストreplyのid
+            $table->integer('reply_id')->nullable();
             $table->string('slug')->unique();
             $table->integer('channel_id');
             $table->timestamps();
