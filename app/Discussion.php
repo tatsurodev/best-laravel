@@ -45,7 +45,20 @@ class Discussion extends Model
         ]);
         // 通知設定
         if ($reply->owner->id !== $this->author->id) {
-        $reply->owner->notify(new ReplyMarkedAsBestReply($reply->discussion));
-        // $reply->owner->notify(new ReplyMarkedAsBestReply($this));
+            $reply->owner->notify(new ReplyMarkedAsBestReply($reply->discussion));
+            // $reply->owner->notify(new ReplyMarkedAsBestReply($this));
+        }
+    }
+
+    public function scopeFilterByChannels($builder)
+    {
+        if (request()->query('channel')) {
+            $channel = Channel::where('slug', request()->query('channel'))->first();
+            if ($channel) {
+                return $builder->where('channel_id', $channel->id);
+            } else {
+                return $builder;
+            }
+        }
     }
 }
