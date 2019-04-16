@@ -2,6 +2,8 @@
 
 namespace LaravelForum;
 
+use LaravelForum\Notifications\ReplyMarkedAsBestReply;
+
 class Discussion extends Model
 {
     // Userモデル(親)とDiscussion(子)のリレーションを定義
@@ -41,5 +43,8 @@ class Discussion extends Model
         $this->update([
             'reply_id' => $reply->id,
         ]);
+        // 通知設定
+        $reply->owner->notify(new ReplyMarkedAsBestReply($reply->discussion));
+        // $reply->owner->notify(new ReplyMarkedAsBestReply($this));
     }
 }
