@@ -11,7 +11,7 @@ class ShoppingController extends Controller
     public function add_to_cart()
     {
         $pdt = Product::findOrFail(request()->pdt_id);
-        $cart = Cart::add([
+        $cartItem = Cart::add([
             'id' => $pdt->id,
             'name' => $pdt->name,
             'qty' => request()->qty,
@@ -19,11 +19,16 @@ class ShoppingController extends Controller
             'weight' => $pdt->weight,
         ]);
         // dd(Cart::content());
+
+        // cartitemとmodelを関連付けてdbから直接product情報を取得できるようにする
+        // cartItemInstance->model->propertyName
+        Cart::associate($cartItem->rowId, Product::class);
         return redirect()->route('cart');
     }
 
     public function cart()
     {
+        // Cart::destroy();
         return view('cart');
     }
 }
