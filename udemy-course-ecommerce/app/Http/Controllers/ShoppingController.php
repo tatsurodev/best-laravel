@@ -18,6 +18,12 @@ class ShoppingController extends Controller
             'price' => $pdt->price,
             'weight' => $pdt->weight,
         ]);
-        dd(Cart::content());
+        // dd(Cart::content());
+        return redirect()->route('cart');
+    }
+
+    public function cart()
+    {
+        return view('cart');
     }
 }
