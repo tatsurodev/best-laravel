@@ -56,7 +56,7 @@
                                     </td>
 
                                     <td class="product-subtotal">
-                                        <h5 class="total amount">${{ Cart::total() }}</h5>
+                                        <h5 class="total amount">${{ number_format(Cart::total()) }}</h5>
                                     </td>
                                 </tr>
 
@@ -82,10 +82,11 @@
                                     <span style="float: right;">
                                         <form action="{{ route('cart.checkout') }}" method="POST">
                                             @csrf
+                                            <!-- data-amountで使用する単位はセント -->
                                             <script
                                                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                 data-key="pk_test_oAmPTz7bDf4LGWxMX0uJ2P2T00Ps8EPiHH"
-                                                data-amount="999"
+                                                data-amount="{{ Cart::total() * 100 }}"
                                                 data-name="Udemy E-commerce tutorial"
                                                 data-description="Buy some books"
                                                 data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
