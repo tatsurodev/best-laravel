@@ -19,6 +19,8 @@ Route::post('/cart/add', 'ShoppingController@add_to_cart')->name('cart.add');
 
 Route::get('/cart', 'ShoppingController@cart')->name('cart');
 
+Route::get('/cart/delete/{product}', 'ShoppingController@cart_delete')->name('cart.delete');
+
 Route::resource('products', 'ProductController');
 
 Auth::routes();
