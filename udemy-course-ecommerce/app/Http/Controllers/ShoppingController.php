@@ -23,7 +23,7 @@ class ShoppingController extends Controller
         // cartitemとmodelを関連付けてdbから直接product情報を取得できるようにする
         // cartItemInstance->model->propertyName
         Cart::associate($cartItem->rowId, Product::class);
-        return redirect()->route('cart');
+        return redirect()->route('cart')->withSuccess('Product added to cart.');
     }
 
     public function cart()
@@ -35,19 +35,19 @@ class ShoppingController extends Controller
     public function cart_delete($id)
     {
         Cart::remove($id);
-        return redirect()->back();
+        return redirect()->back()->withSuccess('Product was removed from cart.');
     }
 
     public function incr($id, $qty)
     {
         Cart::update($id, $qty + 1);
-        return redirect()->back();
+        return redirect()->back()->withSuccess('Product qty updated.');
     }
 
     public function decr($id, $qty)
     {
         Cart::update($id, $qty - 1);
-        return redirect()->back();
+        return redirect()->back()->withSuccess('Product qty updated.');
     }
 
     public function rapid_add($id)
@@ -62,6 +62,6 @@ class ShoppingController extends Controller
         ]);
 
         Cart::associate($cartItem->rowId, Product::class);
-        return redirect()->route('cart');
+        return redirect()->route('cart')->withSuccess('Product added to cart.');
     }
 }

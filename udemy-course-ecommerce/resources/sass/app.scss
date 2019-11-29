@@ -1,8 +1,9 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url("https://fonts.googleapis.com/css?family=Nunito");
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// 下記の読み込みでecommerce tempalateのlayoutが崩れる、bootstrap versionのconflictか?
+// @import '~bootstrap/scss/bootstrap';

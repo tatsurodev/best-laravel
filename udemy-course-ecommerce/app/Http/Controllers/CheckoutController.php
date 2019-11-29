@@ -13,6 +13,10 @@ class CheckoutController extends Controller
 {
     public function index()
     {
+        // cart中身ゼロの場合、checkout pageの表示阻止
+        if (Cart::content()->count() == 0) {
+            return redirect()->back()->withInfo('Your cart is still empty. Do some shopping.');
+        }
         return view('checkout');
     }
 

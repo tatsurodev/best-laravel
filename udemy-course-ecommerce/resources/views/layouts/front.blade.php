@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app/css/grid.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app/css/styles.css') }}">
 
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
 
     <!--Plugins styles-->
 
@@ -112,7 +114,17 @@
 <script src="{{ asset('app/js/ScrollMagic.min.js') }}"></script>
 <script src="{{ asset('app/js/animation.velocity.min.js') }}"></script>
 
+<script src="{{ asset('js/app.js') }}"></script>
 <!-- ...end JS Script -->
+
+<script>
+    @if(Session::has('success'))
+        toastr.success('{{ Session::get('success') }}')
+    @endif
+    @if(Session::has('info'))
+        toastr.info('{{ Session::get('info') }}')
+    @endif
+</script>
 
 
 </body>
