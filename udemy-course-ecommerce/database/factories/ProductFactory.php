@@ -11,5 +11,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'image' => 'uploads/products/book.png',
         'description' => $faker->paragraph(4),
         'price' => $faker->numberBetween(100, 10000),
+        'weight' => $faker->numberBetween(10, 10000),
     ];
 });

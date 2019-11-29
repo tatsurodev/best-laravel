@@ -15,6 +15,8 @@ Route::get('/', 'FrontEndController@index')->name('index');
 
 Route::get('/product/{product}', 'FrontEndController@singleProduct')->name('product.single');
 
+Route::post('/cart/add', 'ShoppingController@add_to_cart')->name('cart.add');
+
 Route::resource('products', 'ProductController');
 
 Auth::routes();
