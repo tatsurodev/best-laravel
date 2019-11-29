@@ -80,13 +80,14 @@
                                     </a>
 
                                     <span style="float: right;">
-                                        <form action="/your-server-side-code" method="POST">
+                                        <form action="{{ route('cart.checkout') }}" method="POST">
+                                            @csrf
                                             <script
                                                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                                data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+                                                data-key="pk_test_oAmPTz7bDf4LGWxMX0uJ2P2T00Ps8EPiHH"
                                                 data-amount="999"
-                                                data-name="Stripe.com"
-                                                data-description="Widget"
+                                                data-name="Udemy E-commerce tutorial"
+                                                data-description="Buy some books"
                                                 data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
                                                 data-locale="auto"
                                                 data-zip-code="true">

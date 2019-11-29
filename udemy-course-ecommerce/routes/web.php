@@ -28,6 +28,8 @@ Route::get('/cart/rapid/add/{id}', 'ShoppingController@rapid_add')->name('cart.r
 
 Route::get('/cart/checkout', 'CheckoutController@index')->name('cart.checkout');
 
+Route::post('/cart/checkout', 'CheckoutController@pay')->name('cart.pay');
+
 Route::resource('products', 'ProductController');
 
 Auth::routes();
