@@ -13,4 +13,9 @@ class FrontEndController extends Controller
             'products' => Product::paginate(3),
         ]);
     }
+
+    public function singleProduct(Product $product)
+    {
+        return view('single', ['product' => $product]);
+    }
 }
